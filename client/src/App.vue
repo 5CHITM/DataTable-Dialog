@@ -11,7 +11,7 @@
       <v-btn class="ma-2" active-class="red lighten-1" to="/about"> About </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container> <router-view :books="books" @delte="deleteBook" /></v-container>
+      <v-container> <router-view :books="books" @delte="deleteBook" @edit="editBook" /></v-container>
     </v-main>
   </v-app>
 </template>
@@ -34,6 +34,11 @@ export default {
       console.log(book);
       this.books[index] = book;
       this.books = this.books.filter((el) => el.isDeleted == false);
+    },
+    editBook(book) {
+      const index = this.books.findIndex((q) => q.id === book.id);
+      console.log(book);
+      this.books[index] = book;
     },
   },
 };
