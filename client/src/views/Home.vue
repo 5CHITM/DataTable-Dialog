@@ -2,14 +2,14 @@
   <div>
     <p class="text-h3 text-center mt-4"><v-icon class="text-h3 red--text">mdi-heart</v-icon> Willkommen! <v-icon class="text-h3 red--text">mdi-heart</v-icon></p>
     <v-data-table :headers="headers" :items="books" class="elevation-1">
-      <template v-slot:item.imageLink="{ item }">
+      <template v-slot:item.image="{ item }">
         <v-img
           max-height="100"
           max-width="50"
-          :src="`${item.imageLink}`"
+          :src="`http://localhost:3000/${item.image}`"
           @click="
             imageDialog = true;
-            image = item.imageLink;
+            image = item.image;
           "
         >
         </v-img>
@@ -23,7 +23,7 @@
 
     <v-dialog v-model="imageDialog" width="500">
       <v-card>
-        <v-img :src="image" max-width="500"> </v-img>
+        <v-img :src="`http://localhost:3000/${image}`" max-width="500"> </v-img>
 
         <v-divider></v-divider>
 
@@ -47,7 +47,7 @@
                 <v-text-field label="Title" v-model="newValues.title"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Country" v-model="newValues.country"></v-text-field>
+                <v-text-field label="Country" v-model="newValues.year"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -71,7 +71,7 @@ export default {
       activeItem: {},
       newValues: {
         title: '',
-        country: '',
+        year: '',
       },
       headers: [
         {
@@ -80,8 +80,9 @@ export default {
           sortable: false,
           value: 'title',
         },
-        { text: 'Image', value: 'imageLink' },
-        { text: 'Country', value: 'country' },
+        { text: 'Image', value: 'image' },
+        { text: 'Year', value: 'year' },
+        { text: 'Pages', value: 'pages' },
         { text: 'Language', value: 'language' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
@@ -90,22 +91,40 @@ export default {
     };
   },
   methods: {
+    // editItem() {
+    //   let newItem = this.activeItem;
+    //   newItem.title = this.newValues.title;
+    //   newItem.country = this.newValues.country;
+    //   this.editDialog = false;
+    //   this.$emit('edit', newItem);
+    // },
+    // deleteItem(item) {
+    //   item.isDeleted = true;
+    //   this.$emit('delte', item);
+    // },
+    // openEditMenu(item) {
+    //   this.activeItem = item;
+    //   console.log(this.activeItem);
+    //   this.newValues.title = item.title;
+    //   this.newValues.country = item.country;
+    //   this.editDialog = true;
+    // },
+
     editItem() {
       let newItem = this.activeItem;
       newItem.title = this.newValues.title;
-      newItem.country = this.newValues.country;
+      newItem.year = this.newValues.year;
       this.editDialog = false;
       this.$emit('edit', newItem);
     },
     deleteItem(item) {
-      item.isDeleted = true;
       this.$emit('delte', item);
     },
     openEditMenu(item) {
       this.activeItem = item;
       console.log(this.activeItem);
       this.newValues.title = item.title;
-      this.newValues.country = item.country;
+      this.newValues.year = item.year;
       this.editDialog = true;
     },
   },

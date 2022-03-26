@@ -1,0 +1,3 @@
+get http://localhost:3000/books
+####
+delete http://localhost:3000/book/12

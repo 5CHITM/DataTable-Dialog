@@ -1,5 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
+const { getBooks, delBook } = require('../controllers/books');
 
 const router = express.Router();
 const db = require('../db');
@@ -11,5 +12,8 @@ router.get(
     res.json(rows);
   }),
 );
+
+router.get('/books', getBooks);
+router.delete('/book/:id', delBook);
 
 module.exports = router;

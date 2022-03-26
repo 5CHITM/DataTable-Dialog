@@ -17,29 +17,40 @@
 </template>
 
 <script>
-import booksJson from './assets/books.json';
+// import booksJson from './assets/books.json';
+import axios from 'axios';
 export default {
   created() {
-    this.books = booksJson.map((el) => ({ ...el, isDeleted: false }));
-    this.books = this.books.filter((el) => el.isDeleted == false);
+    // this.books = booksJson.map((el) => ({ ...el, isDeleted: false }));
+    // this.books = this.books.filter((el) => el.isDeleted == false);
+    this.getBooks();
   },
   name: 'App',
 
   data: () => ({
-    books: null,
+    books: [],
   }),
   methods: {
-    deleteBook(book) {
-      const index = this.books.findIndex((q) => q.id === book.id);
-      console.log(book);
-      this.books[index] = book;
-      this.books = this.books.filter((el) => el.isDeleted == false);
+    async getBooks() {
+      const { data } = await axios({
+        url: 'http://localhost:3000/books',
+        method: 'get',
+      });
+      this.books = data;
     },
-    editBook(book) {
-      const index = this.books.findIndex((q) => q.id === book.id);
-      console.log(book);
-      this.books[index] = book;
-    },
+    async deleteBook() {},
+    async editBook() {},
+    // deleteBook(book) {
+    //   const index = this.books.findIndex((q) => q.id === book.id);
+    //   console.log(book);
+    //   this.books[index] = book;
+    //   this.books = this.books.filter((el) => el.isDeleted == false);
+    // },
+    // editBook(book) {
+    //   const index = this.books.findIndex((q) => q.id === book.id);
+    //   console.log(book);
+    //   this.books[index] = book;
+    // },
   },
 };
 </script>
